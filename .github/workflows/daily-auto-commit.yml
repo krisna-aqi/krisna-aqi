@@ -1,0 +1,31 @@
+---
+name: Daily Auto Commit
+on:
+  schedule:
+    - cron: 0 1 * * *
+  workflow_dispatch: null
+permissions:
+  contents: write
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Git
+        run: |
+          git config --local user.email "emmanuel.mathew@aqi.co.id"
+          git config --local user.name "krisna-aqi"
+      - name: Update timestamp
+        run: |
+          echo "Updated: $(date)" > TIMESTAMP.txt
+      - name: Update README last updated date
+        run: >
+          NOW=$(TZ='Asia/Jakarta' date +'%Y-%m-%d %H:%M:%S WIB')
+
+          sed -i "/<!-- LAST-UPDATED-START -->/,/<!-- LAST-UPDATED-END -->/c\\<!-- LAST-UPDATED-START -->\n*Last Updated: ${NOW}* | 🤖 *Auto-updated daily*\n<!-- LAST-UPDATED-END -->" README.md
+      - name: Commit and push
+        run: |
+          git add .
+          git commit -m "Daily auto-commit" || echo "Nothing to commit"
+          git push
