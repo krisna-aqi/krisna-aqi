@@ -132,7 +132,7 @@
 
 ---
 
-## 📊 GitHub Analytics
+## 📊 GitHub Analytics For Personal Github
 
 <div align="center">
   <img height="180em" src="http://github-profile-summary-cards.vercel.app/api/cards/stats?username=emkr-13&theme=2077" alt="Stats" />
